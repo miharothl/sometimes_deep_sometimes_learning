@@ -1,0 +1,33 @@
+#!/bin/bash
+
+usage() {
+  echo "Usage: start-tensorboard [options] [args]
+
+Starts Tensorboard on default or specifeid port.
+
+Options:
+  -p <alias>  Start with no browser on a specifed port e.g. 44123.
+  -h          This help screen"
+  exit 0
+}
+
+main() {
+  local flag
+  local port
+
+  while getopts 'hp:' flag; do
+    case ${flag} in
+      h) usage ;;
+      p) port="${OPTARG}" ;;
+      *) usage ;;
+    esac
+  done
+
+  if [[ ${port} ]]; then
+    tensorboard --logdir=./_logs --port=${port}
+  else
+    tensorboard --logdir=./_logs
+  fi
+}
+
+main "$@"

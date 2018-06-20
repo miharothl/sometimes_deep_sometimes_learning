@@ -1,0 +1,33 @@
+#!/bin/bash
+
+usage() {
+  echo "Usage: start-notebook [options] [args]
+
+Starts Jupiter Notebook localy or on the server (no browser on port).
+
+Options:
+  -p <alias>  Start with no browser on a specifed port e.g. 44123.
+  -h          This help screen"
+  exit 0
+}
+
+main() {
+  local flag
+  local port
+
+  while getopts 'hp:' flag; do
+    case ${flag} in
+      h) usage ;;
+      p) port="${OPTARG}" ;;
+      *) usage ;;
+    esac
+  done
+
+  if [[ ${port} ]]; then
+    ipython notebook --port=${port} --no-browser --ip=127.0.0.1
+  else
+    jupyter notebook 
+  fi
+}
+
+main "$@"
