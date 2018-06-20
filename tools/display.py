@@ -1,3 +1,14 @@
+import time
+
+#matplotlib for rendering
+import matplotlib.pyplot as plt
+
+from PIL import Image
+#iPython display for making sure we can render the frames
+from IPython import display
+#seaborn for rendering
+# import seaborn
+import numpy as np
 
 
 """
@@ -33,3 +44,27 @@ def display_screen(action, points, input_t):
         display.display(plt.gcf())
     # Update the last frame time
     last_frame_time = set_max_fps(last_frame_time)
+
+
+def show_game(snapshots):
+    rows = ([""]*len(snapshots))
+
+    for s in range(len(snapshots)):
+        for y in range(snapshots[s].shape[1]):
+            rows[y] += "|"
+            for x in range(snapshots[s].shape[0]):
+                if snapshots[s][y][x]:
+                    rows[y] = rows[y] + "*"
+                else:
+                    rows[y] = rows[y] + " "
+
+    for row in rows:
+        print(row)
+
+
+def moving_average_diff(a, n=100):
+    diff = np.diff(a)
+    ret = np.cumsum(diff, dtype=float)
+    ret[n:] = ret[n:] - ret[:-n]
+    return ret[n - 1:] / n
+

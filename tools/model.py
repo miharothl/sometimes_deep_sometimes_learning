@@ -5,17 +5,17 @@ from keras.models import Sequential
 from keras.layers.core import Dense
 from keras.optimizers import sgd, RMSprop
 
-def baseline_model(grid_size,num_actions,hidden_size):
+def baseline_model(grid_size,num_actions):
     #seting up the model with keras
     model = Sequential()
-    model.add(Dense(hidden_size, input_shape=(grid_size**2,), activation='relu'))
-    model.add(Dense(hidden_size, activation='relu'))
+    model.add(Dense(100, input_shape=(grid_size**2,), activation='relu'))
+    model.add(Dense(100, activation='relu'))
     model.add(Dense(num_actions))
     model.compile(sgd(lr=.1), "mse")
     return model
 
 
-def baseline_model_improved(grid_size,num_actions,hidden_size):
+def baseline_model_improved(grid_size, num_actions):
     #seting up the model with keras
 
     nb_frames = 1
